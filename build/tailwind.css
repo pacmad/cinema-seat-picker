@@ -29098,7 +29098,8 @@ select {
 }
 
 #checkout.is-available {
-  color: #ff5a1f;
+  background-color: #ff5a1f;
+  color:white;
 }
 
 #checkout.is-available:hover {
