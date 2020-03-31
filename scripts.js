@@ -168,6 +168,16 @@ const updateOrderSummary = () => {
 };
 
 
+const checkForScreenTime = () => {
+    const activeTime = document.querySelector('#screening-times li.is-active');
+    const cinema = document.querySelector('.selector');
+    if(activeTime) {
+    if ( cinema.classList.contains('opacity-50') ) { cinema.classList.remove('opacity-50', 'cursor-not-allowed'); };
+    } else {
+        if ( !cinema.classList.contains('opacity-50') ) { cinema.classList.add('opacity-50', 'cursor-not-allowed'); };
+    }
+}
+
 
 
 
@@ -191,6 +201,8 @@ moviesUI.addEventListener('change', () => {
     updatePrices(selectedMovie);
     updateOrderSummary();
     updateRating(selectedMovie);
+
+    checkForScreenTime();
 
 })
 
@@ -218,6 +230,8 @@ const updateSeats = () => {
 }
 
 
+
+
 // Click a time
 
 screeningTimesUI.addEventListener('click', (e) => {
@@ -230,8 +244,8 @@ screeningTimesUI.addEventListener('click', (e) => {
 
         e.target.classList.add('is-active');    
         
-        document.querySelector('.selector').classList.remove('opacity-50', 'cursor-not-allowed');
-
+        
+        checkForScreenTime();
         updateSeats();
 
     }
@@ -245,8 +259,6 @@ screeningTimesUI.addEventListener('click', (e) => {
 // Update object for that time to make those seats unavailable
 
 checkoutButtonUI.addEventListener('click', () => {
-
-    console.log('click');
 
     const selectedMovieID = movies.findIndex(x => x.title === moviesUI.value);
     const selectedMovie = movies[selectedMovieID];
@@ -263,6 +275,9 @@ checkoutButtonUI.addEventListener('click', () => {
         seat.classList.remove('selected');
     });
     
+
+    document.querySelector('#screening-times li.is-active').classList.remove('is-active');
+    checkForScreenTime();
     updateOrderSummary();
     updateSeats();
 
