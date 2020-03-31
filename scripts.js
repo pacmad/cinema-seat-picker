@@ -213,6 +213,14 @@ const updateSeats = () => {
     const selectedMovieTimeID = selectedMovie.times.findIndex(x => x.time === movieTime.innerHTML)
     const selectedMovieAudience = selectedMovie.times[selectedMovieTimeID].audience;
 
+
+    // Clear seats
+
+        allSeats.forEach((seat) => {
+            seat.classList.remove('selected');
+            seat.classList.remove('unavailable');
+    })
+
     // Add unavailable seats
     selectedMovieAudience.forEach( (seat) => {
 
@@ -220,13 +228,8 @@ const updateSeats = () => {
 
     })
 
-        // Clear seats
+  
 
-        allSeats.forEach((seat) => {
-            seat.classList.remove('selected');
-            seat.classList.remove('unavailable');
-        })
-    
 }
 
 
