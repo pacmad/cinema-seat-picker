@@ -261,7 +261,9 @@ screeningTimesUI.addEventListener('click', (e) => {
 // If user clicks checkout
 // Update object for that time to make those seats unavailable
 
-checkoutButtonUI.addEventListener('click', () => {
+checkoutButtonUI.addEventListener('click', (e) => {
+
+    e.preventDefault();
 
     const selectedMovieID = movies.findIndex(x => x.title === moviesUI.value);
     const selectedMovie = movies[selectedMovieID];
