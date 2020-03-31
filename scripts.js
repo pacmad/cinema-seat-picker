@@ -235,10 +235,9 @@ const updateSeats = () => {
 // Click a time
 
 screeningTimesUI.addEventListener('click', (e) => {
-    console.log('clicked the screening times!')
-        
+
     if(e.target.tagName == 'LI') {
-        console.log('clicked an LI!!!!!')    
+          
         screeningTimesUI.querySelectorAll('li').forEach((li) => {
             li.classList.contains('is-active') ? li.classList.remove('is-active') : "";
         });
@@ -247,7 +246,7 @@ screeningTimesUI.addEventListener('click', (e) => {
         
         
         checkForScreenTime();
-        updateSeats();
+    
 
     }
 
