@@ -279,7 +279,7 @@ checkoutButtonUI.addEventListener('click', () => {
     document.querySelector('#screening-times li.is-active').classList.remove('is-active');
     checkForScreenTime();
     updateOrderSummary();
-    updateSeats();
+
 
 
         
