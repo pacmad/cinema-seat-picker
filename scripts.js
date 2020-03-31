@@ -172,12 +172,12 @@ const checkForScreenTime = () => {
     const activeTime = document.querySelector('#screening-times li.is-active');
     const cinema = document.querySelector('.selector');
     if(activeTime) {
-    if ( cinema.classList.contains('opacity-50') ) { cinema.classList.remove('opacity-50', 'cursor-not-allowed'); };
+    if ( cinema.classList.contains('opacity-50') ) { cinema.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none'); };
     
     updateSeats();
 
     } else {
-        if ( !cinema.classList.contains('opacity-50') ) { cinema.classList.add('opacity-50', 'cursor-not-allowed'); };
+        if ( !cinema.classList.contains('opacity-50') ) { cinema.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none'); };
     }
 }
 
