@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+select {
+    position:relative;
+    background: url("/chevron-down.svg") right center no-repeat;
+}
+
+#screen {
+    box-shadow: 0px 10px 10px #ed8936, 0px 0px 3px #ed8936;
+}
+
+
+.seat {
+    @apply h-4 w-3 bg-orange-300 rounded cursor-pointer;
+}
+
+@media(min-width:600px) {
+.seat {
+    @apply h-6 w-5;
+}
+}
+
+.seat.unavailable {
+    @apply bg-gray-300 cursor-not-allowed;
+}
+
+.seat.selected, .seat.premium.selected {
+    @apply bg-orange-500;
+}
+
+.seat.premium {
+    @apply bg-green-300;
+}
+
+.row:nth-child(3), .row:nth-child(5) {
+    @apply mb-8;
+}
+
+#screening-times>li {
+    @apply mr-2 py-6 px-3 bg-orange-100 rounded-lg text-lg text-orange-500 font-bold cursor-pointer duration-500 transition;
+}
+
+#screening-times>li:hover {
+    @apply bg-orange-500 text-white;
+}
+
+#checkout.is-disabled {
+    @apply text-orange-300 cursor-not-allowed;
+}
+
+#checkout.is-available {
+    @apply text-orange-500;
+}
+
+#checkout.is-available:hover {
+    @apply bg-orange-500 text-white;
+}
+
+#rating {
+    @apply text-white p-2 rounded-lg inline-block text-4xl leading-none;
+}
