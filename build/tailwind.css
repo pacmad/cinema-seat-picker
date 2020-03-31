@@ -29032,7 +29032,7 @@ video {
 
 select {
   position:relative;
-  background: url("./chevron-down.svg") right center no-repeat;
+  background: url("../chevron-down.svg") right center no-repeat;
 }
 
 #screen {
