@@ -46,6 +46,10 @@ select {
     @apply bg-orange-500 text-white;
 }
 
+#screening-times>li.is-active {
+    @apply bg-orange-500 text-white;
+}
+
 #checkout.is-disabled {
     @apply text-orange-300 cursor-not-allowed;
 }

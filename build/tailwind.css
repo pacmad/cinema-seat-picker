@@ -29087,7 +29087,7 @@ select {
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
 }
 
-#screening-times>li:hover {
+#screening-times>li:hover, #screening-times>li.is-active {
   background-color: #ff5a1f;
   color: #ffffff;
 }

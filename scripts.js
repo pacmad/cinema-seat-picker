@@ -3,13 +3,13 @@ const movies = [
         title: 'Die Hard',
         times: [
               { time:'10:00',
-              audience: ''},
+              audience: [0, 12, 13, 14, 15, 88, 89, 90, 92, 93]},
               { time:'12:00',
-              audience: ''},
+              audience: [15, 32, 33, 34, 62, 88, 120, 121]},
               { time:'15:00',
-              audience: ''},
+              audience: [0, 1, 2, 12, 22, 33, 34, 35, 100, 101]},
               { time:'20:00',
-              audience: ''}],
+              audience: [10, 11, 12, 23, 24, 40, 41, 89]}],
         rating: '18',
         ticketPrices: {
             premium: 12,
@@ -19,14 +19,14 @@ const movies = [
     {
         title: 'Madagascar',
         times: [
-              { time:'12:00',
-              audience: ''},
-              { time:'13:15',
-              audience: ''},
-              { time:'14:00',
-              audience: ''},
-              { time:'16:00',
-              audience: ''}],
+            { time:'10:00',
+            audience: [0, 12, 13, 14, 15, 88, 89, 90, 92, 93]},
+            { time:'12:00',
+            audience: [15, 32, 33, 34, 62, 88, 120, 121]},
+            { time:'15:00',
+            audience: [0, 1, 2, 12, 22, 33, 34, 35, 100, 101]},
+            { time:'20:00',
+            audience: [10, 11, 12, 23, 24, 40, 41, 89]}],
         rating: 'PG',
         ticketPrices: {
             premium: 10,
@@ -36,14 +36,14 @@ const movies = [
     {
         title: 'The Avengers',
         times: [
-              { time:'09:00',
-              audience: ''},
-              { time:'12:30',
-              audience: ''},
-              { time:'13:20',
-              audience: ''},
-              { time:'23:00',
-              audience: ''}],
+            { time:'10:00',
+            audience: [0, 12, 13, 14, 15, 88, 89, 90, 92, 93]},
+            { time:'12:00',
+            audience: [15, 32, 33, 34, 62, 88, 120, 121]},
+            { time:'15:00',
+            audience: [0, 1, 2, 12, 22, 33, 34, 35, 100, 101]},
+            { time:'20:00',
+            audience: [10, 11, 12, 23, 24, 40, 41, 89]}],
         rating: '15',
         ticketPrices: {
             premium: 12.5,
@@ -56,7 +56,7 @@ const moviesUI = document.querySelector('#movie');
 const screeningTimesUI = document.querySelector('#screening-times');
 const regularPriceUI = document.querySelector('#regular-price');
 const premiumPriceUI = document.querySelector('#premium-price');
-const allSeats = document.querySelector('.seats');
+const allSeats = document.querySelectorAll('.seats .seat');
 
 const ratingUI = document.querySelector('#rating');
 const regularSummary = document.querySelector('#regular-summary');
@@ -136,11 +136,10 @@ const updatePrices = (selectedMovie) => {
 
 const updateOrderSummary = () => {
 
-    const selectedSeats = allSeats.querySelectorAll('.seat.selected');
-    const premiumSeats = allSeats.querySelectorAll('.seat.premium.selected');
+    const selectedSeats = document.querySelectorAll('.seats .seat.selected');
+    const premiumSeats = document.querySelectorAll('.seats .seat.premium.selected');
     const premiumSelectedSeats = premiumSeats.length;
     const regularSelectedSeats = selectedSeats.length - premiumSelectedSeats;
-    console.log(selectedSeats);
 
     // If no seats selected, hide order summary
     premiumSelectedSeats === 0 ? premiumSummary.classList.add('hidden') : premiumSummary.classList.remove('hidden');
@@ -168,15 +167,18 @@ const updateOrderSummary = () => {
     } 
 };
 
+
+
+
+
 populateUI();
 
-allSeats.addEventListener('click', (e) => {
+document.querySelector('.seats').addEventListener('click', (e) => {
 
     if(!e.target.classList.contains('unavailable')) {
         e.target.classList.toggle('selected');
 
         updateOrderSummary();
-
     }
 });
 
@@ -189,5 +191,82 @@ moviesUI.addEventListener('change', () => {
     updatePrices(selectedMovie);
     updateOrderSummary();
     updateRating(selectedMovie);
+
+})
+
+const updateSeats = () => {
+    const selectedMovieID = movies.findIndex(x => x.title === moviesUI.value);
+    const selectedMovie = movies[selectedMovieID];
+    const movieTime = document.querySelector('#screening-times li.is-active');
+    const selectedMovieTimeID = selectedMovie.times.findIndex(x => x.time === movieTime.innerHTML)
+    const selectedMovieAudience = selectedMovie.times[selectedMovieTimeID].audience;
+
+
+    // Clear seats
+
+    allSeats.forEach((seat) => {
+        seat.classList.remove('selected');
+        seat.classList.remove('unavailable');
+    })
+
+    // Add unavailable seats
+    selectedMovieAudience.forEach( (seat) => {
+
+        allSeats[seat].classList.add('unavailable');
+
+    })
+}
+
+
+// Click a time
+
+screeningTimesUI.addEventListener('click', (e) => {
+
+    if(e.target.tagName == 'LI') {
+        
+        screeningTimesUI.querySelectorAll('li').forEach((li) => {
+            li.classList.contains('is-active') ? li.classList.remove('is-active') : "";
+        });
+
+        e.target.classList.add('is-active');    
+        
+        document.querySelector('.selector').classList.remove('opacity-50', 'cursor-not-allowed');
+
+        updateSeats();
+
+    }
+
+});
+
+
+// Checkout function
+
+// If user clicks checkout
+// Update object for that time to make those seats unavailable
+
+checkoutButtonUI.addEventListener('click', () => {
+
+    console.log('click');
+
+    const selectedMovieID = movies.findIndex(x => x.title === moviesUI.value);
+    const selectedMovie = movies[selectedMovieID];
+    const movieTime = document.querySelector('#screening-times li.is-active');    
+    const selectedMovieTimeID = selectedMovie.times.findIndex(x => x.time === movieTime.innerHTML)
+    const selectedMovieAudience = selectedMovie.times[selectedMovieTimeID].audience;
+    const selectedSeats = document.querySelectorAll('.seats .seat.selected');
+    const seatsIndex = [...selectedSeats].map((seat) =>([...allSeats].indexOf(seat)));
+    
+    
+    Array.prototype.push.apply(selectedMovieAudience, seatsIndex);
+
+    selectedSeats.forEach((seat) => {
+        seat.classList.remove('selected');
+    });
+    
+    updateOrderSummary();
+    updateSeats();
+
+
+        
 
 })
