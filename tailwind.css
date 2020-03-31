@@ -47,7 +47,7 @@ select {
 }
 
 #screening-times>li.is-active {
-    @apply bg-orange-500 text-white;
+    bg-orange-500 text-white;
 }
 
 #checkout.is-disabled {

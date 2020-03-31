@@ -173,6 +173,9 @@ const checkForScreenTime = () => {
     const cinema = document.querySelector('.selector');
     if(activeTime) {
     if ( cinema.classList.contains('opacity-50') ) { cinema.classList.remove('opacity-50', 'cursor-not-allowed'); };
+    
+    updateSeats();
+
     } else {
         if ( !cinema.classList.contains('opacity-50') ) { cinema.classList.add('opacity-50', 'cursor-not-allowed'); };
     }
@@ -249,6 +252,7 @@ screeningTimesUI.addEventListener('click', (e) => {
         
         
         checkForScreenTime();
+        
     
 
     }
@@ -273,18 +277,21 @@ checkoutButtonUI.addEventListener('click', (e) => {
     const selectedSeats = document.querySelectorAll('.seats .seat.selected');
     const seatsIndex = [...selectedSeats].map((seat) =>([...allSeats].indexOf(seat)));
     
-    
+
     Array.prototype.push.apply(selectedMovieAudience, seatsIndex);
 
-    selectedSeats.forEach((seat) => {
+
+
+    allSeats.forEach((seat) => {
         seat.classList.remove('selected');
-    });
+        seat.classList.remove('unavailable');
+    })
     
 
     document.querySelector('#screening-times li.is-active').classList.remove('is-active');
     checkForScreenTime();
     updateOrderSummary();
-
+    
 
 
         
